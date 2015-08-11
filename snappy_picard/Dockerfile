@@ -10,4 +10,11 @@ RUN wget -O /tmp/picard-tools-1.115.zip http://sourceforge.net/projects/picard/f
     chown -R snappy:snappy /usr/local/pipeline && \
     rm -rvf /tmp/*
 
+# R (without anything)
+RUN sudo apt-get update && \
+    sudo apt-get -y install r-base && \
+    apt-get clean && \
+    apt-get autoclean && \
+    apt-get autoremove -y
+
 CMD ["/bin/bash"]
