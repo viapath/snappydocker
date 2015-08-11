@@ -1,0 +1,2 @@
+# snappydocker
+Dockerfiles for snappy
