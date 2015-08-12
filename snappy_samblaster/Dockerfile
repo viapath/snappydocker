@@ -12,7 +12,7 @@ RUN cd /tmp && \
     chmod -R 755 /usr/local/pipeline/samblaster && \
     ln -s /usr/local/pipeline/samblaster/samblaster /usr/local/bin/ && \
     sed -i '$aPATH=$PATH:/usr/local/pipeline/samblaster' /home/snappy/.bashrc && \
-    chmod -R 755 /usr/local/pipeline && \
+    chmod -R 755 /usr/local/pipeline/samblaster && \
     chown -R snappy:snappy /usr/local/pipeline && \
     rm -rf /tmp/*
 

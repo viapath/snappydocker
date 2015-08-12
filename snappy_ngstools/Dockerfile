@@ -3,25 +3,26 @@ FROM viapath/snappy_base
 MAINTAINER David Brawand <dbrawand@nhs.net>
 ENV HOME /root
 
-# htslib && samtools
+# htslib / samtools / bcftools
 RUN cd /tmp && \
-    git clone --branch=master git://github.com/samtools/htslib.git && \
+    git clone git://github.com/samtools/htslib.git && \
     cd htslib && \
-    autoconf && \
-    ./configure  && \
-    make && \
+    git checkout 1.2.1 && \
     make install && \
     cd /tmp && \
-    git clone --branch=master git://github.com/samtools/samtools.git && \
+    git clone git://github.com/samtools/samtools.git && \
     cd samtools && \
     git checkout 1.2 && \
-    make && \
     make install && \
-    cd .. && \
-    rm -rf /tmp/samtools /tmp/htslib
+    cd /tmp && \
+    git clone git://github.com/samtools/bcftools.git && \
+    cd bcftools && \
+    git checkout 1.2 && \
+    make install && \
+    rm -rf /tmp/htslib /tmp/samtools /tmp/bcftools
 
 # install python modules for samtools (pysam)
-RUN sudo pip install pysam
+RUN pip install pysam==0.8.3
 
 # bedtools
 RUN cd /tmp && \
@@ -35,6 +36,57 @@ RUN cd /tmp && \
     cd .. && \
     rm -rf /tmp/bedtools2
 
+# vcflib
+RUN cd /tmp && \
+    git clone --recursive https://github.com/ekg/vcflib.git && \
+    cd vcflib && \
+    git checkout 7f1575e24f0d603a69aa4938ae4ed07dd074e9f0 && \
+    git submodule update --init --recursive && \
+    make && \
+    mv bin /usr/local/pipeline/vcflib && \
+    sed -i '$aPATH=$PATH:/usr/local/pipeline/vcflib' /home/snappy/.bashrc && \
+    chmod -R 755 /usr/local/pipeline/vcflib && \
+    chown -R snappy:snappy /usr/local/pipeline && \
+    ln -s /usr/local/pipeline/vcflib/* /usr/local/bin/ && \
+    rm -rvf /tmp/*
+
+## VCFtools
+RUN cd tmp && \
+    git clone https://github.com/vcftools/vcftools.git && \
+    cd vcftools && \
+    git checkout v0.1.13 && \
+    make && \
+    make install && \
+    rm -rf /tmp/*
+
+# gVCFtools
+RUN cd /tmp && \
+    git clone --recursive https://github.com/sequencing/gvcftools.git && \
+    cd gvcftools && \
+    git checkout v0.16 && \
+    make && \
+    mv bin /usr/local/pipeline/gvcftools && \
+    sed -i '$aPATH=$PATH:/usr/local/pipeline/gvcftools' /home/snappy/.bashrc && \
+    chmod -R 755 /usr/local/pipeline/gvcftools && \
+    chown -R snappy:snappy /usr/local/pipeline && \
+    ln -s /usr/local/pipeline/gvcftools/* /usr/local/bin/ && \
+    rm -rvf /tmp/*
+
+# VT
+RUN cd tmp && \
+    git clone --recursive https://github.com/atks/vt.git && \
+    cd vt && \
+    git checkout 0.57 && \
+    git submodule update --recursive && \
+    make && \
+    mkdir -p /usr/local/pipeline/vt && \
+    cp vt /usr/local/pipeline/vt/ && \
+    sed -i '$aPATH=$PATH:/usr/local/pipeline/vt' /home/snappy/.bashrc && \
+    chmod -R 755 /usr/local/pipeline/vt && \
+    chown -R snappy:snappy /usr/local/pipeline && \
+    ln -s /usr/local/pipeline/vt/vt /usr/local/bin/ && \
+    rm -rvf /tmp/*
+
 # sambamba (for future use)
 RUN cd /tmp && \
     wget https://github.com/lomereiter/sambamba/releases/download/v0.5.8/sambamba_v0.5.8_linux.tar.bz2 && \
@@ -42,10 +94,5 @@ RUN cd /tmp && \
     mv sambamba_v0.5.8 /usr/local/bin/sambamba && \
     chmod +rwx /usr/local/bin/sambamba && \
     rm -rf /tmp/sambamba_v0.5.8_linux.tar.bz2
-
-# Clean up when done
-RUN rm -rvf /tmp/* && \
-    rm -rf /var/tmp/* && \
-    rm -rf /var/lib/{apt,dpkg,cache,log}/
 
 CMD ["/bin/bash"]

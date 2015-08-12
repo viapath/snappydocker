@@ -2,4 +2,4 @@
 Snappy pipeline docker images
 
 ## Installation
-Just run the Makefile script!
+Just run the Makefile!

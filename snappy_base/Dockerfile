@@ -4,11 +4,20 @@ FROM debian:jessie
 MAINTAINER David Brawand <dbrawand@nhs.net>
 ENV HOME /root
 
+# upgrade apt-get and add additional repos
+RUN sed -i '$adeb http://cran.ma.imperial.ac.uk/bin/linux/debian jessie-cran3/' /etc/apt/sources.list && \
+    apt-key adv --keyserver keys.gnupg.net --recv-key 381BA480 && \
+    apt-get update && apt-get dist-upgrade -y && \
+    apt-get autoremove -y && \
+    apt-get autoclean && \
+    apt-get clean && \
+    apt-get purge
+
 # Basic build tools and python install
-RUN apt-get update && apt-get dist-upgrade -y && \
-    apt-get install -y --no-install-recommends \
+RUN apt-get install -y --no-install-recommends \
     apt-utils \
     ant \
+    asciidoc \
     automake \
     bash \
     binutils \
@@ -26,6 +35,7 @@ RUN apt-get update && apt-get dist-upgrade -y && \
     git-core \
     gfortran \
     gnuplot \
+    gradle \
     graphviz \
     htop \
     libatlas-dev \
@@ -33,6 +43,7 @@ RUN apt-get update && apt-get dist-upgrade -y && \
     libbz2-dev \
     libc-bin \
     libconfig-dev \
+    libcurl4-openssl-dev \
     libfreetype6-dev \
     liblapack-dev \
     liblzma-dev \
@@ -62,8 +73,37 @@ RUN apt-get update && apt-get dist-upgrade -y && \
     vim \
     wget \
     zlib1g-dev && \
+    apt-get autoremove -y && \
+    apt-get autoclean && \
     apt-get clean && \
     apt-get purge
+
+# latex install
+RUN apt-get install -y --no-install-recommends \
+    texinfo \
+    texlive \
+    texlive-latex-extra && \
+    apt-get autoremove -y && \
+    apt-get autoclean && \
+    apt-get clean && \
+    apt-get purge
+
+# R install (and basic packages)
+RUN apt-get install -y --no-install-recommends \
+    libatlas3-base \
+    libopenblas-base \
+    r-base \
+    r-base-dev \
+    littler && \
+    apt-get autoremove -y && \
+    apt-get autoclean && \
+    apt-get clean && \
+    apt-get purge
+
+# install R packages
+COPY install.R /tmp/
+RUN Rscript --no-save --no-restore /tmp/install.R && \
+    rm -f /tmp/install.R
 
 # install python modules
 RUN sudo pip install \

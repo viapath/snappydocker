@@ -3,7 +3,7 @@ MAINTAINER David Brawand <dbrawand@nhs.net>
 ENV HOME /root
 
 ## bowtie
-RUN wget --no-verbose -O /tmp/bowtie2-2.2.3-linux-x86_64.zip http://sourceforge.net/projects/bowtie-bio/files/bowtie2/2.2.3/bowtie2-2.2.3-linux-x86_64.zip && \
+RUN wget -O /tmp/bowtie2-2.2.3-linux-x86_64.zip http://sourceforge.net/projects/bowtie-bio/files/bowtie2/2.2.3/bowtie2-2.2.3-linux-x86_64.zip && \
     unzip /tmp/bowtie2-2.2.3-linux-x86_64.zip -d /usr/local/pipeline/ && \
     sed -i '$aPATH=$PATH:/usr/local/pipeline/bowtie2-2.2.3:/usr/local/pipeline/bowtie2-2.2.3/scripts' /home/snappy/.bashrc && \
     chmod -R 755 /usr/local/pipeline/bowtie2-2.2.3 && \
@@ -22,7 +22,7 @@ RUN cd /tmp && wget --no-verbose http://sourceforge.net/projects/bio-bwa/files/b
     rm -rvf /tmp/*
 
 # Stampy
-RUN wget --no-verbose -O /tmp/stampy-latest.tgz http://www.well.ox.ac.uk/bioinformatics/Software/Stampy-latest.tgz && \
+RUN wget -O /tmp/stampy-latest.tgz http://www.well.ox.ac.uk/bioinformatics/Software/Stampy-latest.tgz && \
     tar xvfz /tmp/stampy-latest.tgz -C /usr/local/pipeline/ && \
     chmod -R 755 /usr/local/pipeline/stampy-1.0.28 && \
     cd /usr/local/pipeline/stampy-1.0.28 && \
