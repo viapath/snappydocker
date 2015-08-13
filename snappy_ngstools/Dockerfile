@@ -50,15 +50,6 @@ RUN cd /tmp && \
     ln -s /usr/local/pipeline/vcflib/* /usr/local/bin/ && \
     rm -rvf /tmp/*
 
-## VCFtools
-RUN cd tmp && \
-    git clone https://github.com/vcftools/vcftools.git && \
-    cd vcftools && \
-    git checkout v0.1.13 && \
-    make && \
-    make install && \
-    rm -rf /tmp/*
-
 # gVCFtools
 RUN cd /tmp && \
     git clone --recursive https://github.com/sequencing/gvcftools.git && \
@@ -94,5 +85,17 @@ RUN cd /tmp && \
     mv sambamba_v0.5.8 /usr/local/bin/sambamba && \
     chmod +rwx /usr/local/bin/sambamba && \
     rm -rf /tmp/sambamba_v0.5.8_linux.tar.bz2
+
+## VCFtools
+RUN cd /usr/local/pipeline && \
+    git clone https://github.com/vcftools/vcftools.git && \
+    cd vcftools && \
+    git checkout v0.1.13 && \
+    make && \
+    make install && \
+    sed -i '$aPATH=$PATH:/usr/local/pipeline/vcftools/bin' /home/snappy/.bashrc && \
+    rm -rf .git Makefile cpp examples
+
+ENV PERL5LIB /usr/local/pipeline/vcftools/perl
 
 CMD ["/bin/bash"]

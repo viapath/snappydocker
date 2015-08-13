@@ -8,9 +8,10 @@ RUN cd /usr/local/pipeline/ && \
     git clone --recursive https://github.com/AstraZeneca-NGS/VarDictJava.git && \
     cd VarDictJava && \
     git checkout v1.4.0 && \
-    git submodule update --recursive && \
+    git submodule update --recursive
+
+RUN cd /usr/local/pipeline/VarDictJava && \
     ./gradlew clean installApp && \
-    ./gradlew clean javadoc && \
     chmod -R 755 /usr/local/pipeline/VarDictJava && \
     chown -R snappy:snappy /usr/local/pipeline && \
     sed  -i '$aPATH=$PATH:/usr/local/pipeline/VarDictJava/VarDict' /home/snappy/.bashrc
