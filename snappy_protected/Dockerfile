@@ -31,4 +31,7 @@ RUN wget -O /tmp/snpEff_latest_core.zip http://sourceforge.net/projects/snpeff/f
     sed -i '$aPATH=$PATH:/usr/local/pipeline/snpEff' /home/snappy/.bashrc && \
     rm -rvf /tmp/*
 
+## download snpEff database (hg19)
+RUN java -jar /usr/local/pipeline/snpEff/snpEff.jar download -v -dataDir /usr/local/pipeline/snpEff hg19
+
 CMD ["/bin/bash"]
