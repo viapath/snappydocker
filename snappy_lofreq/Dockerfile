@@ -1,4 +1,4 @@
-FROM viapath/snappy_ngstools
+FROM viapath/snappy_picard
 MAINTAINER David Brawand <dbrawand@nhs.net>
 ENV HOME /root
 
