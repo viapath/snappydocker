@@ -3,11 +3,11 @@ MAINTAINER David Brawand <dbrawand@nhs.net>
 ENV HOME /root
 
 ## Picard
-RUN wget -O /tmp/picard-tools-1.115.zip http://sourceforge.net/projects/picard/files/picard-tools/1.115/picard-tools-1.115.zip && \
-    unzip /tmp/picard-tools-1.115.zip -d /usr/local/pipeline/ && \
-    sed -i '$aCLASSPATH=.:$CLASSPATH:/usr/local/pipeline/picard-tools-1.115' /home/snappy/.bashrc && \
-    sed -i '$aPATH=$PATH:/usr/local/pipeline/picard-tools-1.115' /home/snappy/.bashrc && \
-    chmod -R 755 /usr/local/pipeline/picard-tools-1.115 && \
+RUN wget -O /tmp/picard-tools-1.139.zip https://github.com/broadinstitute/picard/releases/download/1.139/picard-tools-1.139.zip && \
+    unzip /tmp/picard-tools-1.139.zip -d /usr/local/pipeline/ && \
+    sed -i '$aCLASSPATH=.:$CLASSPATH:/usr/local/pipeline/picard-tools-1.139' /home/snappy/.bashrc && \
+    sed -i '$aPATH=$PATH:/usr/local/pipeline/picard-tools-1.139' /home/snappy/.bashrc && \
+    chmod -R 755 /usr/local/pipeline/picard-tools-1.139 && \
     chown -R snappy:snappy /usr/local/pipeline && \
     rm -rvf /tmp/*
 
