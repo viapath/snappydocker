@@ -25,7 +25,7 @@ RUN cd /tmp && wget --no-check-certificate http://www.openbioinformatics.org/ann
 ## SnpEff
 RUN wget -O /tmp/snpEff_latest_core.zip http://sourceforge.net/projects/snpeff/files/snpEff_latest_core.zip && \
     unzip /tmp/snpEff_latest_core.zip -d /usr/local/pipeline/ && \
-    chmod -R 755 /usr/local/pipeline/snpEff && \
+    chmod -R 775 /usr/local/pipeline/snpEff && \
     chown -R snappy:snappy /usr/local/pipeline && \
     sed -i '$aCLASSPATH=.:$CLASSPATH:/usr/local/pipeline/snpEff/snpEff.jar' /home/snappy/.bashrc && \
     sed -i '$aPATH=$PATH:/usr/local/pipeline/snpEff' /home/snappy/.bashrc && \
