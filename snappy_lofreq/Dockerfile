@@ -1,4 +1,4 @@
-FROM viapath/snappy_picard
+FROM viapath/snappy_picard:flatdog
 MAINTAINER David Brawand <dbrawand@nhs.net>
 ENV HOME /root
 

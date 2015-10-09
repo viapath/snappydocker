@@ -1,5 +1,5 @@
 # NGS tools (BAM and BED handling)
-FROM viapath/snappy_base
+FROM viapath/snappy_base:flatdog
 MAINTAINER David Brawand <dbrawand@nhs.net>
 ENV HOME /root
 

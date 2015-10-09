@@ -1,4 +1,4 @@
-FROM viapath/snappy_ngstools
+FROM viapath/snappy_ngstools:flatdog
 MAINTAINER David Brawand <dbrawand@nhs.net>
 ENV HOME /root
 ENV JAVA_HOME /usr/lib/jvm/java-7-openjdk-amd64

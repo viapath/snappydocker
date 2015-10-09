@@ -1,6 +1,4 @@
-# Snappy base image (python packages and basic tools)
-
-FROM viapath/snappy_ngstools
+FROM viapath/snappy_ngstools:flatdog
 MAINTAINER David Brawand <dbrawand@nhs.net>
 ENV HOME /root
 
