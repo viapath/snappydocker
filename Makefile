@@ -3,49 +3,94 @@
 
 VERSION=flatdog
 
-## Basic install  no annotation data bases or manual build tools
-
-publicimages = viapath/snappy_align:$(VERSION) viapath/snappy_align:$(VERSION) \
- 	viapath/snappy_bamutil:$(VERSION) viapath/snappy_base:$(VERSION) \
-	viapath/snappy_delly:$(VERSION) viapath/snappy_exomedepth:$(VERSION) \
-	viapath/snappy_fastqc:$(VERSION) viapath/snappy_freebayes:$(VERSION) \
-	viapath/snappy_gviz:$(VERSION) viapath/snappy_kraken:$(VERSION) \
-	viapath/snappy_lofreq:$(VERSION) viapath/snappy_lumpy:$(VERSION) \
-	viapath/snappy_ngstools:$(VERSION) viapath/snappy_picard:$(VERSION) \
-	viapath/snappy_platypus:$(VERSION) viapath/snappy_reporting:$(VERSION) \
-	viapath/snappy_samblaster:$(VERSION) viapath/snappy_trimmomatic:$(VERSION) \
-	viapath/snappy_vardict:$(VERSION) viapath/snappy_varscan:$(VERSION) \
-	viapath/snappy_crossmap:$(VERSION) viapath/snappy_alpaca::$(VERSION)
-
-privateimages = dbrawand/snappy_protected
-
-all: buildall pushall
-
-buildall: buildpublic buildprivate
-
-pushall: pushpublic pushprivate
-
 login:
 	docker login
 
-## PUSH
-pushpublic: buildpublic
-	docker push $(publicimages)
-
-pushprivate: buildprivate
-	docker push $(privateimages)
-
 ## PULL
-pull: login
-	docker pull $(publicimages)
-	docker pull $(privateimages)
+pullall: pullprivate pullpublic
+
+pullpublic: pull_base pull_ngstools pull_fastqc pull_kraken pull_platypus pull_trimmomatic pull_align pull_alpaca pull_bamutil pull_crossmap pull_delly pull_freebayes pull_lumpy pull_picard pull_reporting pull_samblaster pull_vardict pull_varscan pull_lofreq pull_exomedepth pull_gviz
+
+pullprivate: login pull_protected
+
+pull_protected:
+	docker pull dbrawand/snappy_protected:$(VERSION)
+
+pull_base:
+	docker pull viapath/snappy_base:$(VERSION)
+
+# base deps
+pull_ngstools:
+	docker pull viapath/snappy_ngstools:$(VERSION)
+
+pull_fastqc:
+	docker pull viapath/snappy_fastqc:$(VERSION)
+
+pull_kraken:
+	docker pull viapath/snappy_kraken:$(VERSION)
+
+pull_platypus:
+	docker pull viapath/snappy_platypus:$(VERSION)
+
+pull_trimmomatic:
+	docker pull viapath/snappy_trimmomatic:$(VERSION)
+
+# ngstools deps
+pull_align:
+	docker pull viapath/snappy_align:$(VERSION)
+
+pull_alpaca:
+	docker pull viapath/snappy_alpaca:$(VERSION)
+
+pull_bamutil:
+	docker pull viapath/snappy_bamutil:$(VERSION)
+
+pull_crossmap:
+	docker pull viapath/snappy_crossmap:$(VERSION)
+
+pull_delly:
+	docker pull viapath/snappy_delly:$(VERSION)
+
+pull_freebayes:
+	docker pull viapath/snappy_freebayes:$(VERSION)
+
+pull_lumpy:
+	docker pull viapath/snappy_lumpy:$(VERSION)
+
+pull_picard:
+	docker pull viapath/snappy_picard:$(VERSION)
+
+pull_reporting:
+	docker pull viapath/snappy_reporting:$(VERSION)
+
+pull_samblaster:
+	docker pull viapath/snappy_samblaster:$(VERSION)
+
+pull_vardict:
+	docker pull viapath/snappy_vardict:$(VERSION)
+
+pull_varscan:
+	docker pull viapath/snappy_varscan:$(VERSION)
+
+# picard deps
+pull_lofreq:
+	docker pull viapath/snappy_lofreq:$(VERSION)
+
+# reporting deps
+pull_exomedepth:
+	docker pull viapath/snappy_exomedepth:$(VERSION)
+
+pull_gviz:
+	docker pull viapath/snappy_gviz:$(VERSION)
+
 
 ## BUILD
+buildall: buildpublic buildprivate
+
 buildpublic: baseimage ngstools align bamutil crossmap delly exomedepth fastqc freebayes gviz kraken lumpy lofreq picard platypus reporting samblaster trimmomatic vardict varscan
 
 buildprivate: protected
 
-# INDIVIDUAL BUILDS
 baseimage:
 	docker build -t viapath/snappy_base:$(VERSION) snappy_base
 
