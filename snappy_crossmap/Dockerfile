@@ -10,4 +10,8 @@ RUN wget -O /tmp/CrossMap-0.2.tar.gz http://downloads.sourceforge.net/project/cr
     python setup.py install && \
     rm -rvf /tmp/*
 
+# bedGraphToBigWig
+RUN wget -O /usr/local/bin/bedGraphToBigWig https://github.com/ENCODE-DCC/KentUtils/raw/master/bin/linux.x86_64/bedGraphToBigWig && \
+    chmod 755 /usr/local/bin/bedGraphToBigWig
+
 CMD ["/bin/bash"]
