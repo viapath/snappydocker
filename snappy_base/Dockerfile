@@ -68,6 +68,7 @@ RUN apt-get install -y --no-install-recommends \
     ssl-cert \
     sudo \
     tabix \
+    time \
     tree \
     unzip \
     vim \
@@ -145,9 +146,6 @@ RUN chown -R snappy:snappy /usr/local/pipeline && \
   chmod 775 /usr/local/pipeline && \
   chmod -R 777 /usr/local/pipeline && \
   chown -R snappy:snappy /usr/local/pipeline
-
-# time
-RUN apt-get install -y time
 
 # Clean up when done
 RUN rm -rf /tmp/* /var/tmp/* && \
