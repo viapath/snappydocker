@@ -146,6 +146,9 @@ RUN chown -R snappy:snappy /usr/local/pipeline && \
   chmod -R 777 /usr/local/pipeline && \
   chown -R snappy:snappy /usr/local/pipeline
 
+# time
+RUN apt-get install -y time
+
 # Clean up when done
 RUN rm -rf /tmp/* /var/tmp/* && \
     apt-get clean && \
@@ -153,9 +156,6 @@ RUN rm -rf /tmp/* /var/tmp/* && \
     apt-get autoremove -y && \
     rm -rf /var/lib/{apt,dpkg,cache,log}/ && \
     rm -rf /usr/local/pipeline/*.gz /usr/local/pipeline/*.bz2 /usr/local/pipeline/*.tgz
-
-# time
-RUN apt-get install -y time
 
 # Use baseimage-docker's bash.
 CMD ["/bin/bash"]
