@@ -154,5 +154,8 @@ RUN rm -rf /tmp/* /var/tmp/* && \
     rm -rf /var/lib/{apt,dpkg,cache,log}/ && \
     rm -rf /usr/local/pipeline/*.gz /usr/local/pipeline/*.bz2 /usr/local/pipeline/*.tgz
 
+# time
+RUN apt-get install -y time
+
 # Use baseimage-docker's bash.
 CMD ["/bin/bash"]
