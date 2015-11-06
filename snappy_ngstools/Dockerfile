@@ -3,23 +3,29 @@ FROM viapath/snappy_base:flatdog
 MAINTAINER David Brawand <dbrawand@nhs.net>
 ENV HOME /root
 
-# htslib / samtools / bcftools
+# htslib
 RUN cd /tmp && \
     git clone git://github.com/samtools/htslib.git && \
     cd htslib && \
     git checkout 1.2.1 && \
     make install && \
-    cd /tmp && \
+    rm -rf /tmp/htslib
+
+# samtools
+RUN cd /tmp && \
     git clone git://github.com/samtools/samtools.git && \
     cd samtools && \
     git checkout 1.2 && \
     make install && \
-    cd /tmp && \
+    rm -rf /tmp/samtools
+
+# bcftools
+RUN cd /tmp && \
     git clone git://github.com/samtools/bcftools.git && \
     cd bcftools && \
     git checkout 1.2 && \
     make install && \
-    rm -rf /tmp/htslib /tmp/samtools /tmp/bcftools
+    rm -rf /tmp/bcftools
 
 # install python modules for samtools (pysam)
 RUN pip install pysam==0.8.3
