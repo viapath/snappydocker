@@ -52,6 +52,7 @@ RUN apt-get install -y --no-install-recommends \
     libreadline-dev \
     libssl-dev \
     libxml2-dev \
+    libxml2-utils \
     llvm \
     locales \
     make \
