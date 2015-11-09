@@ -4,7 +4,8 @@ MAINTAINER David Brawand <dbrawand@nhs.net>
 ENV HOME /root
 
 # htslib samtools bcftools
-RUN cd /tmp && \
+RUN apt-get install -y --no-install-recommends libxml2-utils && \
+    cd /tmp && \
     git clone git://github.com/samtools/htslib.git && \
     cd htslib && \
     git checkout 1.2.1 && \
