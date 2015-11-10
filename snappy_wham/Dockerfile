@@ -19,13 +19,9 @@ RUN pip install -U numpy scipy scikit-learn argparse
 
 # WHAM from source
 RUN mkdir -p /usr/local/pipeline/ && cd /usr/local/pipeline/ && \
-    git clone --recursive https://github.com/zeeev/wham.git
-
-# compile
-RUN cd /usr/local/pipeline/wham && make
-
-# setup
-RUN chmod -R 755 /usr/local/pipeline/wham && \
+    git clone --recursive https://github.com/zeeev/wham.git && \
+    cd /usr/local/pipeline/wham && make && \
+    chmod -R 755 /usr/local/pipeline/wham && \
     chown -R snappy:snappy /usr/local/pipeline && \
     ln -s /usr/local/pipeline/wham/bin/WHAM-GRAPHENING /usr/local/bin/ && \
     ln -s /usr/local/pipeline/wham/bin/WHAM-BAM /usr/local/bin/ && \
