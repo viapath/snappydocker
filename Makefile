@@ -83,11 +83,14 @@ pull_exomedepth:
 pull_gviz:
 	docker pull viapath/snappy_gviz:$(VERSION)
 
+pull_bcl2fastq:
+	docker pull viapath/snappy_bcl2fastq:$(VERSION)
+
 
 ## BUILD
 buildall: buildpublic buildprivate
 
-buildpublic: baseimage ngstools align bamutil crossmap delly exomedepth fastqc freebayes gviz kraken lumpy lofreq picard platypus reporting samblaster trimmomatic vardict varscan
+buildpublic: baseimage ngstools bcl2fastq align bamutil crossmap delly exomedepth fastqc freebayes gviz kraken lumpy lofreq picard platypus reporting samblaster trimmomatic vardict varscan
 
 buildprivate: protected
 
@@ -105,6 +108,9 @@ alpaca: ngstools
 
 bamutil: ngstools
 	docker build -t viapath/snappy_bamutil:$(VERSION) snappy_bamutil
+
+bcl2fastq: ngstools
+	docker build -t viapath/snappy_bcl2fastq:$(VERSION) snappy_bcl2fastq
 
 crossmap: ngstools
 	docker build -t viapath/snappy_crossmap:$(VERSION) snappy_crossmap
@@ -156,3 +162,6 @@ vardict: ngstools
 
 varscan: ngstools
 	docker build -t viapath/snappy_varscan:$(VERSION) snappy_varscan
+
+vep: ngstools
+	docker build -t viapath/snappy_vep:$(VERSION) snappy_vep
