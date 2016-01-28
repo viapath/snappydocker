@@ -3,24 +3,32 @@ FROM viapath/snappy_base:flatdog
 MAINTAINER David Brawand <dbrawand@nhs.net>
 ENV HOME /root
 
-# htslib samtools bcftools
-RUN apt-get install -y --no-install-recommends libxml2-utils && \
-    cd /tmp && \
-    git clone git://github.com/samtools/htslib.git && \
-    cd htslib && \
-    git checkout 1.2.1 && \
-    make install && \
-    cd /tmp && \
-    git clone git://github.com/samtools/samtools.git && \
-    cd samtools && \
-    git checkout 1.2 && \
-    make install && \
-    cd /tmp && \
-    git clone git://github.com/samtools/bcftools.git && \
-    cd bcftools && \
-    git checkout 1.2 && \
-    make install && \
-    rm -rf /tmp/htslib /tmp/samtools /tmp/bcftools
+# asciidoc
+RUN apt-get install -y libxml2-utils asciidoc
+
+# htslib
+RUN cd /tmp && \
+    wget https://github.com/samtools/htslib/releases/download/1.3/htslib-1.3.tar.bz2 && \
+    tar xjvf htslib-1.3.tar.bz2 && \
+    cd htslib-1.3 && \
+    make && make install && \
+    rm -rf /tmp/htslib-1.3
+
+# samtools
+RUN cd /tmp && \
+    wget https://github.com/samtools/samtools/releases/download/1.3/samtools-1.3.tar.bz2 && \
+    tar xjvf samtools-1.3.tar.bz2 && \
+    cd samtools-1.3 && \
+    make && make install && \
+    rm -rf /tmp/samtools-1.3
+
+# bcftools
+RUN cd /tmp && \
+    wget https://github.com/samtools/bcftools/releases/download/1.3/bcftools-1.3.tar.bz2 && \
+    tar xjvf bcftools-1.3.tar.bz2 && \
+    cd bcftools-1.3 && \
+    make && make install && \
+    rm -rf /tmp/bcftools-1.3
 
 # install python modules for samtools (pysam)
 RUN pip install pysam==0.8.3
