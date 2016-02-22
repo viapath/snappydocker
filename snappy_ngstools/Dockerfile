@@ -105,6 +105,20 @@ RUN cd /usr/local/pipeline && \
     sed -i '$aPATH=$PATH:/usr/local/pipeline/vcftools/bin' /home/snappy/.bashrc && \
     rm -rf .git Makefile cpp examples
 
+## Heng Li's alphanumeric (yet unstable)
+RUN cd /usr/local/pipeline && \
+    git clone https://github.com/lh3/foreign.git && \
+    cd foreign/sort && \
+    make && \
+    cp sort /usr/local/bin/ansort
+
+## pyHGVS 0.9.4 (from viapath source)
+RUN cd /tmp && \
+    git clone https://github.com/viapath/hgvs.git && \
+    cd hgvs && git checkout aebe5bd9683f4b5937fd653ce4b13fcd4f3ebb10 && \
+    python setup.py install && \
+    rm -rf /tmp/*
+
 ENV PERL5LIB /usr/local/pipeline/vcftools/perl
 
 CMD ["/bin/bash"]
