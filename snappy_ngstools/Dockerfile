@@ -20,7 +20,7 @@ RUN cd /tmp && \
     cd /tmp && rm -rf /tmp/*
 
 # install python modules for samtools (pysam)
-RUN pip install pysam==0.9.0
+RUN pip install pysam==0.8.3
 
 # bedtools
 RUN cd /tmp && \
