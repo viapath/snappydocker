@@ -5,8 +5,9 @@ MAINTAINER David Brawand <dbrawand@nhs.net>
 ENV HOME /root
 
 # upgrade apt-get and add additional repos
-RUN sed -i '$adeb http://cran.ma.imperial.ac.uk/bin/linux/debian jessie-cran3/' /etc/apt/sources.list && \
-    apt-key adv --keyserver keys.gnupg.net --recv-key 381BA480 && \
+# RUN sed -i '$adeb http://cran.ma.imperial.ac.uk/bin/linux/debian jessie-cran3/' /etc/apt/sources.list && \
+#     apt-key adv --keyserver keys.gnupg.net --recv-key 381BA480 && \
+RUN sed -i '$adeb http://ftp.debian.org/debian jessie-backports main' /etc/apt/sources.list && \
     apt-get update && apt-get dist-upgrade -y && \
     apt-get autoremove -y && \
     apt-get autoclean && \
@@ -90,10 +91,11 @@ RUN apt-get install -y --no-install-recommends \
     apt-get clean && \
     apt-get purge
 
-# R install (and basic packages)
+# R install from official backports (3.2.5)
 RUN apt-get install -y --no-install-recommends \
     libatlas3-base \
-    libopenblas-base \
+    libopenblas-base && \
+    apt-get -t jessie-backports -y install \
     r-base \
     r-base-dev \
     littler && \

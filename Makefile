@@ -97,7 +97,7 @@ buildprivate: protected
 baseimage:
 	docker build -t viapath/snappy_base:$(VERSION) snappy_base
 
-ngstools:
+ngstools: baseimage
 	docker build -t viapath/snappy_ngstools:$(VERSION) snappy_ngstools
 
 align: ngstools
@@ -118,7 +118,7 @@ crossmap: ngstools
 delly: ngstools
 	docker build -t viapath/snappy_delly:$(VERSION) snappy_delly
 
-exomedepth: ngstools
+exomedepth: reporting
 	docker build -t viapath/snappy_exomedepth:$(VERSION) snappy_exomedepth
 
 fastqc: baseimage
