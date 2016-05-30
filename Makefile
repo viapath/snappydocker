@@ -86,6 +86,8 @@ pull_gviz:
 pull_bcl2fastq:
 	docker pull viapath/snappy_bcl2fastq:$(VERSION)
 
+pull_vep:
+	docker pull viapath/snappy_vep:$(VERSION)
 
 ## BUILD
 buildall: buildpublic buildprivate
