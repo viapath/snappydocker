@@ -5,8 +5,11 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV PERL_MM_USE_DEFAULT=1
 ENV CACHEDIR ${HOME}/work/vep
 
+# install mysql
+RUN apt-get install -y mysql-client mysql-server libmysqlclient-dev
+
 # install required perl modules
-RUN cpan -i Archive::Extract DBI CGI Archive::Zip File::Copy::Recursive JSON Sereal
+RUN cpan -i Archive::Extract DBI DBD::mysql CGI Archive::Zip File::Copy::Recursive JSON Sereal
 
 # download and extract VEP GRCh37
 RUN cd /usr/local/pipeline && \
