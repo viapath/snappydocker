@@ -1,6 +1,6 @@
 FROM viapath/snappy_ngstools:flatdog
 MAINTAINER David Brawand <dbrawand@nhs.net>
-ENV HOME /home/vagrant
+#ENV HOME /home/vagrant
 ENV DEBIAN_FRONTEND noninteractive
 ENV PERL_MM_USE_DEFAULT=1
 ENV CACHEDIR ${HOME}/work/vep
@@ -18,15 +18,16 @@ RUN cd /usr/local/pipeline && \
     rm 84.zip
 
 # install VEP
-ENV PATH /usr/local/pipeline/ensembl-tools-release-84/scripts/variant_effect_predictor/htslib:$PATH
-ENV PERL5LIB /usr/local/pipeline/ensembl-tools-release-84/scripts/variant_effect_predictor:$PERL5LIB
-RUN mkdir -p /home/vagrant/work
-RUN cd /usr/local/pipeline/ensembl-tools-release-84/scripts/variant_effect_predictor && \
+ENV VEPINSTALL /usr/local/pipeline/ensembl-tools-release-84/scripts/variant_effect_predictor
+ENV PATH $VEPINSTALL/htslib:$PATH
+ENV PERL5LIB $VEPINSTALL:$PERL5LIB
+RUN cd $VEPINSTALL && \
     perl INSTALL.pl --AUTO ap \
     --PLUGINS all \
     --NO_HTSLIB
-ADD  Grantham.pm ${HOME}/.vep/Plugins
 
+# add own plugins
+ADD Grantham.pm $VEPINSTALL
 
 CMD ["/bin/bash"]
 
