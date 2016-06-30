@@ -86,6 +86,8 @@ pull_gviz:
 pull_bcl2fastq:
 	docker pull viapath/snappy_bcl2fastq:$(VERSION)
 
+pull_vep:
+	docker pull viapath/snappy_vep:$(VERSION)
 
 ## BUILD
 buildall: buildpublic buildprivate
@@ -97,7 +99,7 @@ buildprivate: protected
 baseimage:
 	docker build -t viapath/snappy_base:$(VERSION) snappy_base
 
-ngstools:
+ngstools: baseimage
 	docker build -t viapath/snappy_ngstools:$(VERSION) snappy_ngstools
 
 align: ngstools
@@ -118,7 +120,7 @@ crossmap: ngstools
 delly: ngstools
 	docker build -t viapath/snappy_delly:$(VERSION) snappy_delly
 
-exomedepth: ngstools
+exomedepth: reporting
 	docker build -t viapath/snappy_exomedepth:$(VERSION) snappy_exomedepth
 
 fastqc: baseimage
