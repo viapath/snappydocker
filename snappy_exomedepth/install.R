@@ -11,6 +11,6 @@ biocLite('GenomicRanges',ask=FALSE)
 biocLite('GenomicAlignments',ask=FALSE)
 
 # CRAN PACKAGES
-cranpackages<-c('aod','VGAM')
+cranpackages<-c('aod','VGAM','ExomeDepth')
 install.packages(cranpackages, lib.loc, repos, dependencies=TRUE)
-install.packages('https://cran.r-project.org/src/contrib/Archive/ExomeDepth/ExomeDepth_1.1.8.tar.gz')
+#install.packages('https://cran.r-project.org/src/contrib/Archive/ExomeDepth/ExomeDepth_1.1.10.tar.gz')
