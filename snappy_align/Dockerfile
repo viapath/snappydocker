@@ -24,11 +24,11 @@ RUN cd /tmp && wget --no-verbose http://sourceforge.net/projects/bio-bwa/files/b
 # Stampy
 RUN wget -O /tmp/stampy-latest.tgz http://www.well.ox.ac.uk/bioinformatics/Software/Stampy-latest.tgz && \
     tar xvfz /tmp/stampy-latest.tgz -C /usr/local/pipeline/ && \
-    chmod -R 755 /usr/local/pipeline/stampy-1.0.28 && \
-    cd /usr/local/pipeline/stampy-1.0.28 && \
+    chmod -R 755 /usr/local/pipeline/stampy-1.0.29 && \
+    cd /usr/local/pipeline/stampy-1.0.29 && \
     make && \
-    sed -i '$aPATH=${PATH}:/usr/local/pipeline/stampy-1.0.28' /home/snappy/.bashrc && \
-    chmod -R 755 /usr/local/pipeline/stampy-1.0.28 && \
+    sed -i '$aPATH=${PATH}:/usr/local/pipeline/stampy-1.0.29' /home/snappy/.bashrc && \
+    chmod -R 755 /usr/local/pipeline/stampy-1.0.29 && \
     chown -R snappy:snappy /usr/local/pipeline && \
     rm -rf /tmp/*
 
