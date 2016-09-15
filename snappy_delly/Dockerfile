@@ -4,7 +4,7 @@ ENV HOME /root
 
 # delly (clone takes ages, tons of submodule dependencies, use binary)
 RUN mkdir -p /usr/local/pipeline/delly/ && \
-    wget --no-verbose -O /usr/local/pipeline/delly/delly https://github.com/tobiasrausch/delly/releases/download/v0.6.3/delly_v0.6.3_linux_x86_64bit && \
+    wget --no-verbose -O /usr/local/pipeline/delly/delly https://github.com/tobiasrausch/delly/releases/download/v0.7.5/delly_v0.7.5_linux_x86_64bit && \
     chmod -R 755 /usr/local/pipeline/delly && \
     chown -R snappy:snappy /usr/local/pipeline && \
     ln -s /usr/local/pipeline/delly/delly /usr/local/bin/ && \
