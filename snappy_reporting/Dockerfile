@@ -4,7 +4,7 @@ ENV HOME /root
 
 
 # install rgl dependencies
-RUN apt-get update && apt-get install -y r-cran-rgl libglu1-mesa-dev freeglut3-dev mesa-common-dev
+RUN apt-get update && apt-get install -y r-cran-rgl libglu1-mesa-dev freeglut3-dev mesa-common-dev libpoppler-cpp-dev
 
 # install R packages (knitr etc)
 COPY install.R /tmp/
