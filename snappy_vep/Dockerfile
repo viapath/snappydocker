@@ -5,6 +5,8 @@ ENV DEBIAN_FRONTEND noninteractive
 ENV PERL_MM_USE_DEFAULT=1
 ENV CACHEDIR ${HOME}/work/vep
 
+# update apt sources
+RUN apt-get update
 # install mysql
 RUN apt-get install -y mysql-client mysql-server libmysqlclient-dev
 
