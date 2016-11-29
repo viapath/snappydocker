@@ -9,7 +9,7 @@ login:
 ## PULL
 pullall: pullprivate pullpublic
 
-pullpublic: pull_base pull_ngstools pull_fastqc pull_kraken pull_platypus pull_trimmomatic pull_align pull_alpaca pull_bamutil pull_crossmap pull_delly pull_freebayes pull_lumpy pull_picard pull_reporting pull_samblaster pull_vardict pull_varscan pull_lofreq pull_exomedepth pull_gviz
+pullpublic: pull_base pull_ngstools pull_fastqc pull_kraken pull_platypus pull_trimmomatic pull_align pull_alpaca pull_bamutil pull_crossmap pull_delly pull_freebayes pull_lumpy pull_picard pull_reporting pull_samblaster pull_vardict pull_varscan pull_lofreq pull_exomedepth pull_gviz pull_manta pull_pindel
 
 pullprivate: login pull_protected
 
@@ -57,6 +57,12 @@ pull_freebayes:
 pull_lumpy:
 	docker pull viapath/snappy_lumpy:$(VERSION)
 
+pull_manta:
+	docker pull viapath/snappy_manta:$(VERSION)
+
+pull_pindel:
+	docker pull viapath/snappy_pindel:$(VERSION)
+
 pull_picard:
 	docker pull viapath/snappy_picard:$(VERSION)
 
@@ -92,7 +98,7 @@ pull_vep:
 ## BUILD
 buildall: buildpublic buildprivate
 
-buildpublic: baseimage ngstools bcl2fastq align bamutil crossmap delly exomedepth fastqc freebayes gviz kraken lumpy lofreq picard platypus reporting samblaster trimmomatic vardict varscan
+buildpublic: baseimage ngstools bcl2fastq align bamutil crossmap delly exomedepth fastqc freebayes gviz kraken lumpy lofreq manta pindel picard platypus reporting samblaster trimmomatic vardict varscan
 
 buildprivate: protected
 
@@ -140,6 +146,12 @@ lumpy: ngstools
 
 lofreq: ngstools
 	docker build -t viapath/snappy_lofreq:$(VERSION) snappy_lofreq
+
+manta: ngstools
+	docker build -t viapath/snappy_manta:$(VERSION) snappy_manta
+
+pindel: ngstools
+	docker build -t viapath/snappy_pindel:$(VERSION) snappy_pindel
 
 picard: ngstools
 	docker build -t viapath/snappy_picard:$(VERSION) snappy_picard
