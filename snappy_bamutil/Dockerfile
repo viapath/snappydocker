@@ -20,4 +20,12 @@ RUN cd /tmp && \
     chown -R snappy:snappy /usr/local/pipeline && \
     rm -rvf /tmp/*
 
+# verifyBamID
+RUN cd /tmp && \
+	wget https://github.com/statgen/verifyBamID/releases/download/v1.1.3/verifyBamIDLibStatGen.1.1.3.tgz && \
+	tar xvfz verifyBamIDLibStatGen.1.1.3.tgz && \
+	cd verifyBamID_1.1.3 && \
+	make && make install && \
+	rm -rf /tmp/verifyBamID_1.1.3
+	
 CMD ["/bin/bash"]
